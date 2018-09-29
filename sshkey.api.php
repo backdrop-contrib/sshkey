@@ -21,19 +21,19 @@
  * SSHKEY_ACCESS_IGNORE or simply return nothing. Blindly returning FALSE will
  * break other node access modules.
  *
- * @param $op
+ * @param string $op
  *   The operation to be performed. Possible values:
  *   - 'view'
  *   - 'create'
  *   - 'edit'
  *   - 'delete'
- * @param $entity_type
+ * @param string $entity_type
  *   The entity type that the key operation is associated with.
- * @param $entity_id
+ * @param int $entity_id
  *   The entity ID that the key operation is associated with.
- * @param $key
+ * @param object $key
  *   The SSH key object.
- * @param $account
+ * @param object $account
  *   A user object representing the user for whom the operation is to be
  *   performed.
  *
@@ -43,7 +43,7 @@
  *   operation at all.
  */
 function hook_sshkey_access($op, $entity_type, $entity_id, $key, $account) {
-
+  return NULL;
 }
 
 /**
@@ -52,7 +52,7 @@ function hook_sshkey_access($op, $entity_type, $entity_id, $key, $account) {
  * This hook is invoked from sshkey_save() before the SSH key is saved to the
  * database.
  *
- * @param $key
+ * @param object $key
  *   The SSH key object being inserted or updated.
  */
 function hook_sshkey_presave($key) {
@@ -65,7 +65,7 @@ function hook_sshkey_presave($key) {
  * This hook is invoked from sshkey_save() after the SSH key is inserted into
  * the sshkey table in the database.
  *
- * @param $key
+ * @param object $key
  *   The SSH key object that was created.
  */
 function hook_sshkey_insert($key) {
@@ -78,7 +78,7 @@ function hook_sshkey_insert($key) {
  * This hook is invoked from sshkey_save() after the SSH key is updated in the
  * sshkey table in the database.
  *
- * @param $key
+ * @param object $key
  *   The SSH key object that was updated.
  */
 function hook_sshkey_update($key) {
@@ -91,7 +91,7 @@ function hook_sshkey_update($key) {
  * This hook is invoked from sshkey_delete_multiple() after the SSH key has
  * been removed from the sshkey table in the database.
  *
- * @param $key
+ * @param object $key
  *   The SSH key object that was deleted.
  */
 function hook_sshkey_delete($key) {
@@ -112,11 +112,11 @@ function hook_sshkey_delete($key) {
  * hook_sshkey_alter() instead. If it is really necessary to change the SSH key
  * at the validate stage, you can use form_set_value().
  *
- * @param $key
+ * @param object $key
  *   The SSH key being validated.
- * @param $form
+ * @param array $form
  *   The form being used to edit the SSH key.
- * @param $form_state
+ * @param array $form_state
  *   The form state array.
  * @param array $parsed
  *   The parsed key. This contains the elements 'algorithm', 'key',
