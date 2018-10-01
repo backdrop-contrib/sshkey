@@ -571,7 +571,7 @@ function sshkey_clean_whitespace($key_raw) {
   if (empty($comment)) {
     $expected_length = 0;
     $decoded_value = base64_decode($value, TRUE);
-    while (!empty($decoded_value) && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
+    while (!empty($decoded_value) && strlen($decoded_value) > 4 && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
       $decoded_value = substr($decoded_value, $expected_length);
     }
     if (!empty($decoded_value)) {
