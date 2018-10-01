@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @class Helpers for sshkey test cases.
+ */
 class SSHKeyTestCaseHelper extends DrupalWebTestCase {
 
   public function setUp() {
@@ -30,6 +33,9 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
 
 }
 
+/**
+ * @class Test cases for sshkey.
+ */
 class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
 
   public static function getInfo() {
