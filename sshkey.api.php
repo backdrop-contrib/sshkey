@@ -22,11 +22,8 @@
  * break other node access modules.
  *
  * @param string $op
- *   The operation to be performed. Possible values:
- *   - 'view'
- *   - 'create'
- *   - 'edit'
- *   - 'delete'
+ *   The operation to be performed. Possible values are 'view', 'create',
+ *   'edit', and 'delete'.
  * @param string $entity_type
  *   The entity type that the key operation is associated with.
  * @param int $entity_id
@@ -122,6 +119,6 @@ function hook_sshkey_delete($key) {
  *   The parsed key. This contains the elements 'algorithm', 'key',
  *   'fingerprint', and 'comment'.
  */
-function hook_sshkey_validate($key, $form, $form_state, array $parsed) {
+function hook_sshkey_validate($key, array $form, array $form_state, array $parsed) {
 
 }
