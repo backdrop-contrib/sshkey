@@ -565,6 +565,21 @@ function sshkey_clean_whitespace($key_raw) {
     return $key;
   }
 
+  // If there is no comment, it may have been misinterpeted as base64 data.
+  // Parse segments from the key and check the lengths. Each segment is the
+  // packed unsigned long length, followed by that many bytes.
+  if (empty($comment)) {
+    $expected_length = 0;
+    $decoded_value = base64_decode($value, TRUE);
+    while (!empty($decoded_value) && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
+      $decoded_value = substr($decoded_value, $expected_length);
+    }
+    if (!empty($decoded_value)) {
+      $comment = base64_encode($decoded_value);
+      $value = substr($value, 0, -1 * strlen($comment));
+    }
+  }
+
   return trim($type . ' ' . $value . ' ' . $comment);
 }
 
