@@ -571,12 +571,16 @@ function sshkey_clean_whitespace($key_raw) {
   if (empty($comment)) {
     $expected_length = 0;
     $decoded_value = base64_decode($value, TRUE);
+    $key_value = '';
     while (!empty($decoded_value) && strlen($decoded_value) > 4 && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
+      $key_value .= substr($decoded_value, 0, $expected_length);
       $decoded_value = substr($decoded_value, $expected_length);
     }
+    // The remainder is probably the comment.
     if (!empty($decoded_value)) {
-      $comment = base64_encode($decoded_value);
-      $value = substr($value, 0, -1 * strlen($comment));
+      $key_value = base64_encode($key_value);
+      $comment = substr($value, strlen($key_value));
+      $value = $key_value;
     }
   }
 
