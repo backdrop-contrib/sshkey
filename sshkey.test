@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @class Helpers for sshkey test cases.
+ * Helpers for sshkey test cases.
  */
 class SSHKeyTestCaseHelper extends DrupalWebTestCase {
 
@@ -34,7 +34,7 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
 }
 
 /**
- * @class Test cases for sshkey.
+ * Test cases for sshkey.
  */
 class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
 
