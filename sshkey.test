@@ -1,10 +1,17 @@
 <?php
+/**
+ * @file
+ * Tests for sskey module.
+ */
 
 /**
  * Helpers for sshkey test cases.
  */
 class SSHKeyTestCaseHelper extends DrupalWebTestCase {
 
+  /**
+   * {@inheritdoc}
+   */
   public function setUp() {
     list($modules) = func_get_args() + array(0 => array());
 
@@ -12,7 +19,7 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
     parent::setUp($modules);
   }
 
-  public function randomSSHPublicKey($type = 'ssh-rsa', $length = 276) {
+  public function randomSshPublicKey($type = 'ssh-rsa', $length = 276) {
     $key = new stdClass();
     $key_value = pack('N', strlen($type)) . $type . pack('N', $length);
     for ($i = 0; $i < $length; $i += 1) {
@@ -38,6 +45,9 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
  */
 class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
 
+  /**
+   * {@inheritdoc}
+   */
   public static function getInfo() {
     return array(
       'name' => 'SSH key functional test',
@@ -46,6 +56,9 @@ class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function setUp() {
     parent::setUp();
     $this->normal_user = $this->drupalCreateUser([
@@ -79,7 +92,7 @@ class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
 
     // Add a key only using its key value, so its title should then be
     // auto-generated from the key value.
-    $key = $this->randomSSHPublicKey();
+    $key = $this->randomSshPublicKey();
     $key->title = substr($key->value, 0, 26);
     $edit['value'] = $key->value;
     $this->drupalPost(NULL, $edit, 'Save');
@@ -123,13 +136,13 @@ class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
   public function testCleanWhitespace() {
     $whitespace = "\n ";
 
-    $key1 = $this->randomSSHPublicKey()->value;
+    $key1 = $this->randomSshPublicKey()->value;
     $invalid_key1 = substr_replace($key1, $whitespace, 22, 0);
     $invalid_key1 = substr_replace($invalid_key1, $whitespace, 34, 0);
     $this->assertEqual($key1, sshkey_clean_whitespace($invalid_key1), 'Key with invalid whitespace successfully cleaned.');
 
     $comment = $this->randomName() . '@' . $this->randomName();
-    $key2 = $this->randomSSHPublicKey()->value . ' ' . $comment;
+    $key2 = $this->randomSshPublicKey()->value . ' ' . $comment;
     $invalid_key2 = substr_replace($key2, $whitespace, 18, 0);
     $invalid_key2 = substr_replace($invalid_key2, $whitespace, 27, 0);
     $this->assertEqual($key2, sshkey_clean_whitespace($invalid_key2), 'Key with invalid whitespace (and comment) successfully cleaned.');
