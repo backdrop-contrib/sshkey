@@ -565,23 +565,25 @@ function sshkey_clean_whitespace($key_raw) {
     return $key;
   }
 
-  // If there is no comment, it may have been misinterpeted as base64 data.
-  // Parse segments from the key and check the lengths. Each segment is the
-  // packed unsigned long length, followed by that many bytes.
-  if (empty($comment)) {
-    $expected_length = 0;
-    $decoded_value = base64_decode($value, TRUE);
-    $key_value = '';
-    while (!empty($decoded_value) && strlen($decoded_value) > 4 && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
-      $key_value .= substr($decoded_value, 0, $expected_length);
-      $decoded_value = substr($decoded_value, $expected_length);
-    }
-    // The remainder is probably the comment.
-    if (!empty($decoded_value)) {
-      $key_value = base64_encode($key_value);
+  // Some of the comment may have been misinterpeted as base64 data. Parse
+  // segments from the key and check the lengths. Each segment is the packed
+  // unsigned long length, followed by that many bytes.
+  $decoded_value = base64_decode($value, TRUE);
+  $key_value = '';
+  while (strlen($decoded_value) > 4 && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
+    $key_value .= substr($decoded_value, 0, $expected_length);
+    $decoded_value = substr($decoded_value, $expected_length);
+  }
+  // The remainder is probably the comment.
+  if (strlen($decoded_value) > 0) {
+    $key_value = base64_encode($key_value);
+    if (empty($comment)) {
       $comment = substr($value, strlen($key_value));
-      $value = $key_value;
     }
+    else {
+      $comment = substr($value, strlen($key_value)) . ' ' . $comment;
+    }
+    $value = $key_value;
   }
 
   return trim($type . ' ' . $value . ' ' . $comment);
