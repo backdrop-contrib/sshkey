@@ -482,7 +482,7 @@ function sshkey_parse($key_raw) {
   // "<algorithm type> <base64-encoded key> <comment>".
   $key_parts = explode(' ', $parsed['value'], 3);
   if (count($key_parts) < 2) {
-    throw new SSHKeyParseException(t('The key is invalid.'));
+    throw new SSHKeyParseException(t('The key is invalid. It does not match the expected format.'));
   }
 
   $parsed['algorithm'] = $key_parts[0];
