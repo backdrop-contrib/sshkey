@@ -561,7 +561,7 @@ function sshkey_clean_whitespace($key_raw) {
   // If it was not possible to generate any valid base64-encoded string, then
   // return the key with all spaces preserved. The key will probably fail
   // validation.
-  if (empty($valid)) {
+  if (empty($value)) {
     return $key;
   }
 
