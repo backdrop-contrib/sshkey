@@ -534,8 +534,8 @@ function sshkey_clean_whitespace($key_raw) {
   // Replace all consecutive whitespace characters with a single space.
   $key = trim(preg_replace('/\s+/', ' ', $key_raw));
 
-  // Ignore keys that contain just 1 space.
-  if (substr_count($key, ' ') <= 1) {
+  // Ignore keys that do not contain a space.
+  if (strpos($key, ' ') === FALSE) {
     return $key;
   }
 
