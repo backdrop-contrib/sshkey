@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Install, uninstall, schema, and requirements for sshkey_blacklist.
+ */
+
+/**
  * Implements hook_requirements().
  */
 function sshkey_blacklist_requirements($phase) {

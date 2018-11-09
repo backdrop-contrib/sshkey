@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Install, uninstall, schema, and requirements for sshkey.
+ */
+
+/**
  * Implements hook_schema().
  */
 function sshkey_schema() {

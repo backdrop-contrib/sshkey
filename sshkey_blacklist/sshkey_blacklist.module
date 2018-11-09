@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Validates SSH keys using the ssh-vulnkey blacklist.
+ */
+
+/**
  * Implements hook_sshkey_validate().
  */
 function sshkey_blacklist_sshkey_validate($key, $form, &$form_state) {

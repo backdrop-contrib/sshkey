@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @file
+ * Admin pages for sshkey module.
+ */
+
+/**
+ * Form callback, admin settings.
+ */
 function sshkey_settings_form() {
   $form['sshkey_help'] = array(
     '#type' => 'textarea',

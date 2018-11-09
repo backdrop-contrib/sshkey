@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * Menu page callbacks.
+ */
+
 function sshkey_list_page($entity_type, $entity_id) {
   $destination = drupal_get_destination();
 
