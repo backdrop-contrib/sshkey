@@ -37,7 +37,7 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
 
     $key = new stdClass();
     $key_value = $keys[$type][array_rand($keys[$type])];
-    $key->value = $type . ' ' . base64_encode($key_value);
+    $key->value = $type . ' ' . $key_value;
     $key->fingerprint = md5($key_value);
     return $key;
   }
