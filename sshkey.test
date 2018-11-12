@@ -31,6 +31,9 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
     return $key;
   }
 
+  /**
+   * Assert that a key’s fingerprint appears.
+   */
   public function assertFingerprintText($key) {
     return $this->assertText(theme('sshkey_fingerprint', array('key' => $key)));
   }
@@ -70,6 +73,9 @@ class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
     ]);
   }
 
+  /**
+   * Test key create, update, delete.
+   */
   public function testUserKeys() {
     $this->drupalLogin($this->normal_user);
     $this->clickLink('SSH keys');
@@ -130,6 +136,9 @@ class SSHKeyFunctionalTestCase extends SSHKeyTestCaseHelper {
     $this->assertResponse(403);
   }
 
+  /**
+   * Test sshkey_clean_whitespace().
+   */
   public function testCleanWhitespace() {
     $whitespace = "\n ";
 
