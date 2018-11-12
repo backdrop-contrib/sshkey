@@ -5,6 +5,9 @@
  * Menu page callbacks.
  */
 
+/**
+ * Page callback, list an entity’s SSH keys.
+ */
 function sshkey_list_page($entity_type, $entity_id) {
   $destination = drupal_get_destination();
 
@@ -104,6 +107,9 @@ function sshkey_view_key($entity_type, $entity_id, $key) {
   drupal_page_footer();
 }
 
+/**
+ * Form callback, edit an SSH key.
+ */
 function sshkey_edit_form($form, $form_state, $entity_type, $entity_id, $key = NULL) {
   $entity = entity_load($entity_type, array($entity_id));
   $entity = reset($entity);
@@ -167,10 +173,16 @@ function sshkey_edit_form($form, $form_state, $entity_type, $entity_id, $key = N
   return $form;
 }
 
+/**
+ * Form validate callback, see sshkey_edit_form().
+ */
 function sshkey_edit_form_validate($form, &$form_state) {
   sshkey_validate($form_state['values'], $form, $form_state);
 }
 
+/**
+ * Form submit callback, see sshkey_edit_form().
+ */
 function sshkey_edit_form_submit($form, &$form_state) {
   form_state_values_clean($form_state);
   $key = (object) $form_state['values'];
@@ -178,6 +190,9 @@ function sshkey_edit_form_submit($form, &$form_state) {
   drupal_set_message(t('The SSH public key %title has been saved.', array('%title' => $key->title)));
 }
 
+/**
+ * Form callback. Confirm key deletion.
+ */
 function sshkey_delete_form($form, $form_state, $key) {
   $form['#sshkey'] = $key;
 
@@ -196,6 +211,9 @@ function sshkey_delete_form($form, $form_state, $key) {
   );
 }
 
+/**
+ * Form submit callback, see sshkey_delete_form().
+ */
 function sshkey_delete_form_submit($form, $form_state) {
   sshkey_delete($form_state['values']['key_id']);
   drupal_set_message(t('The SSH public key %title has been deleted.', array('%title' => $form['#sshkey']->title)));
