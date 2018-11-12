@@ -1,10 +1,8 @@
 <?php
 
 /**
- * @file
  * SSH key field handler for delete links.
  */
-
 class sshkey_handler_field_sshkey_link extends views_handler_field {
 
   function construct() {
