@@ -570,10 +570,31 @@ function sshkey_clean_whitespace($key_raw) {
   // unsigned long length, followed by that many bytes.
   $decoded_value = base64_decode($value, TRUE);
   $key_value = '';
+  $sections = [];
   while (strlen($decoded_value) > 4 && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
+    $sections[] = substr($decoded_value, 4, $expected_length - 4);
     $key_value .= substr($decoded_value, 0, $expected_length);
     $decoded_value = substr($decoded_value, $expected_length);
   }
+
+  // Check sections to match key formatting.
+  $expected_section_count = [
+    'ssh-rsa' => 3,
+    'ssh-dss' => 5,
+    // https://tools.ietf.org/html/draft-bjh21-ssh-ed25519-02#section-4
+    'ssh-ed25519' => 2,
+    // https://tools.ietf.org/html/rfc5656#section-3.1
+    'ecdsa-sha2-nistp256' => 3,
+    'ecdsa-sha2-nistp384' => 3,
+    'ecdsa-sha2-nistp521' => 3,
+  ];
+  if (isset($expected_section_count[$type]) && count($sections) !== $expected_section_count[$type]) {
+    throw new SSHKeyParseException(t('The key is invalid. It does not have the expected data. Check that the entire key was copied.'));
+  }
+  if ($type === 'ssh-ed25519' && strlen($sections[1]) !== 32) {
+    throw new SSHKeyParseException(t('The key is invalid. It does not have the expected length. Check that the entire key was copied.'));
+  }
+
   // The remainder is probably the comment.
   if (strlen($decoded_value) > 0) {
     $key_value = base64_encode($key_value);
