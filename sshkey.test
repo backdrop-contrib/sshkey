@@ -27,17 +27,18 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
     static $keys = [
       'ssh-rsa' => [
         // 2048 bit.
-        'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEp+pzR2bkbIh06m7rJ6vQViGqEsyDIUma6TsfoSxr5XC/2NhtC9gvzDRPi6wFot2vvNT8vXejf/oKxP+9HRuxoV/aLV9b0HuphW0Z7427+bwznCcY34tsQzEOs9D6PTynLQ3dzGFJr3Dq+otrhuaVv3RTbDDC0COqyiJ9JPtCkTXBAyzoHhFiGBsXaEQxcQxraSRGGUcpYkdFlxy70IFboVsK7HxMwmQiqneFo10QLkOsoUQ2YcFvgGvRy0l3I+qZ+i510socWDDO21Tud/1w9ftQiqwmng5iWVnMJZdkjmalTXCCuaKBhJEY/fZ/03xraT8vbpkJK11W+/1yVvXt',
-        'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCWef1LUVuh09XMR8CEkeRVj53JYrQiBsm7PyKyqewgBUHLJDW3VGfuBnwgQVakq4m9Z/gEUEeQNj3yPVbxPHt0PvrCImjcOo9LwrbnOU749WT2LeE/c3LQcLJz4xNc9yWMjA+LGYQh2ytmBKMsZXbrJK925Kj9RFyWsHfT0/LsTAfjmp+7kfPotPPqyy8OcITvPDEOKtN7F/AqH1IHRAkx2DldGiA1L6Wcpu+tV9jVN+5E2zCyhOfBPhtGpDPGbeTt/kOwp4FmwmQH15i7KcFzRJosetl3y+HAthTdJbGtbebbeqBM4FT9AzA3JWa8gONCEjAQJSr/VbdXWWbULosT',
+        'AAAAB3NzaC1yc2EAAAADAQABAAABAQDEp+pzR2bkbIh06m7rJ6vQViGqEsyDIUma6TsfoSxr5XC/2NhtC9gvzDRPi6wFot2vvNT8vXejf/oKxP+9HRuxoV/aLV9b0HuphW0Z7427+bwznCcY34tsQzEOs9D6PTynLQ3dzGFJr3Dq+otrhuaVv3RTbDDC0COqyiJ9JPtCkTXBAyzoHhFiGBsXaEQxcQxraSRGGUcpYkdFlxy70IFboVsK7HxMwmQiqneFo10QLkOsoUQ2YcFvgGvRy0l3I+qZ+i510socWDDO21Tud/1w9ftQiqwmng5iWVnMJZdkjmalTXCCuaKBhJEY/fZ/03xraT8vbpkJK11W+/1yVvXt',
+        'AAAAB3NzaC1yc2EAAAADAQABAAABAQCWef1LUVuh09XMR8CEkeRVj53JYrQiBsm7PyKyqewgBUHLJDW3VGfuBnwgQVakq4m9Z/gEUEeQNj3yPVbxPHt0PvrCImjcOo9LwrbnOU749WT2LeE/c3LQcLJz4xNc9yWMjA+LGYQh2ytmBKMsZXbrJK925Kj9RFyWsHfT0/LsTAfjmp+7kfPotPPqyy8OcITvPDEOKtN7F/AqH1IHRAkx2DldGiA1L6Wcpu+tV9jVN+5E2zCyhOfBPhtGpDPGbeTt/kOwp4FmwmQH15i7KcFzRJosetl3y+HAthTdJbGtbebbeqBM4FT9AzA3JWa8gONCEjAQJSr/VbdXWWbULosT',
         // 3072 bit.
-        'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrjAKb3NrCnCpAbbq+gMpSzzY7L9r64oTBI0oBBizYVc5tI8wvxB86qf0M129sEoReA2sW7GGnNW/sLSPfS9XwZk5oJRnIEC99vhrxJtOtDJQNA8C2XpZ/p8SjAclBIpsynrRFEKbn72GWDQu1rmkhUQK+tzzRkD84mcp0au1RxjYm0XGc8aMrEf04whWX/As9VXW/vdsaK7LYZMV3+4MBhdq5XwRxAnOqj0XEUlouW9kbvmS973lP6dRIDBTt8IhS2tCqXE13yvC0cQLWgpCATii2a2xRtSV8ASHt2InNQpETQh7Dtf64JQIGIJn+qsIjD1l6C521gxfeiZGHgXoTZaHkOMCg0Sis4xCpqv4uNgXdEbUksouFSs05WjAyWodS92cVKhdzEpCJBG2U9jFE55saONwcY2PoJPB5xRqygThoCAmJU+2A7cM0udmuyy11MvdiVlKQ5eJXAFiH4ty3x/JThbQHb2+Mu0p/w407QdNXku1oEuO1CT2Cwbh8zSs=',
-        'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDD4rso5dG+kbeClGdIwD79FDIAM3vh4SfU6XOjgjaTBKipcF+gFoQNgpb5FVU9+lGu7/iyuLE2IZM/UszZYvd6SrCdJ/P82L3tRLy9aCU+TtEuQ7NaHTwhBKvUPgZZah9/tbmJldZViQ61fmZp0p4XzLAdDoQ7/Eg+CMTeUUfEUUAaCuFYpY8bxZDAXgeLPnYmBmOHJPPJ/V8LhS83krYs7rP8agFCS9rd//ib0qZ6OTxed/YKjTvO1qvzSUwaClDvCP81P6HBvyHiM+SvA5QWDCRlkc0Q3EcXSv6lvkbD+Q9vGwBdAQz2tVTLT0exj+pkcqSxGsggTn2GcPGX9C6YmJ8QcvzDFsXKCnf1w1YupiOzp4MoQ9ddvQ+M+D7jy1nrp9KP1wy+BhFm2hK1fflqQzGDuw88NCoD06r+AhvRgyWEGreJpozR2Lz3C8H94hr9URwdj3ZlDNwMrtydoe5JG8TUlWk5mvGTxN9+qdpfNr9GpK3NHkl/RTpNPf8CBs8=',
+        'AAAAB3NzaC1yc2EAAAADAQABAAABgQCrjAKb3NrCnCpAbbq+gMpSzzY7L9r64oTBI0oBBizYVc5tI8wvxB86qf0M129sEoReA2sW7GGnNW/sLSPfS9XwZk5oJRnIEC99vhrxJtOtDJQNA8C2XpZ/p8SjAclBIpsynrRFEKbn72GWDQu1rmkhUQK+tzzRkD84mcp0au1RxjYm0XGc8aMrEf04whWX/As9VXW/vdsaK7LYZMV3+4MBhdq5XwRxAnOqj0XEUlouW9kbvmS973lP6dRIDBTt8IhS2tCqXE13yvC0cQLWgpCATii2a2xRtSV8ASHt2InNQpETQh7Dtf64JQIGIJn+qsIjD1l6C521gxfeiZGHgXoTZaHkOMCg0Sis4xCpqv4uNgXdEbUksouFSs05WjAyWodS92cVKhdzEpCJBG2U9jFE55saONwcY2PoJPB5xRqygThoCAmJU+2A7cM0udmuyy11MvdiVlKQ5eJXAFiH4ty3x/JThbQHb2+Mu0p/w407QdNXku1oEuO1CT2Cwbh8zSs=',
+        'AAAAB3NzaC1yc2EAAAADAQABAAABgQDD4rso5dG+kbeClGdIwD79FDIAM3vh4SfU6XOjgjaTBKipcF+gFoQNgpb5FVU9+lGu7/iyuLE2IZM/UszZYvd6SrCdJ/P82L3tRLy9aCU+TtEuQ7NaHTwhBKvUPgZZah9/tbmJldZViQ61fmZp0p4XzLAdDoQ7/Eg+CMTeUUfEUUAaCuFYpY8bxZDAXgeLPnYmBmOHJPPJ/V8LhS83krYs7rP8agFCS9rd//ib0qZ6OTxed/YKjTvO1qvzSUwaClDvCP81P6HBvyHiM+SvA5QWDCRlkc0Q3EcXSv6lvkbD+Q9vGwBdAQz2tVTLT0exj+pkcqSxGsggTn2GcPGX9C6YmJ8QcvzDFsXKCnf1w1YupiOzp4MoQ9ddvQ+M+D7jy1nrp9KP1wy+BhFm2hK1fflqQzGDuw88NCoD06r+AhvRgyWEGreJpozR2Lz3C8H94hr9URwdj3ZlDNwMrtydoe5JG8TUlWk5mvGTxN9+qdpfNr9GpK3NHkl/RTpNPf8CBs8=',
       ],
     ];
 
     $key = new stdClass();
-    $key->value = base64_encode($keys[$type][array_rand($keys[$type])]);
-    $key->fingerprint = md5($key->value);
+    $key_value = $keys[$type][array_rand($keys[$type])];
+    $key->value = $type . ' ' . base64_encode($key_value);
+    $key->fingerprint = md5($key_value);
     return $key;
   }
 
