@@ -35,10 +35,6 @@ class SSHKeyTestCaseHelper extends DrupalWebTestCase {
     return $this->assertText(theme('sshkey_fingerprint', array('key' => $key)));
   }
 
-  public function assertNoFingerprintText($key) {
-    return $this->assertNoText(theme('sshkey_fingerprint', array('key' => $key)));
-  }
-
 }
 
 /**
