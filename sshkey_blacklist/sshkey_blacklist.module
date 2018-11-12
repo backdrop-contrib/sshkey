@@ -21,6 +21,9 @@ function sshkey_blacklist_sshkey_validate($key, $form, &$form_state) {
   }
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function sshkey_blacklist_form_sshkey_settings_form_alter(&$form, $form_state) {
   $form['blacklist'] = array(
     '#type' => 'fieldset',
@@ -36,6 +39,9 @@ function sshkey_blacklist_form_sshkey_settings_form_alter(&$form, $form_state) {
   $form['#validate'] = 'ssh_blacklist_form_sshkey_settings_form_validate';
 }
 
+/**
+ * Validate callback, see sshkey_blacklist_form_sshkey_settings_form_alter().
+ */
 function sshkey_blacklist_form_sshkey_settings_form_validate($form, &$form_state) {
   $vulnkey_path = $form_state['values']['sshkey_blacklist_vulnkey_path'];
   if (!empty($vulnkey_path) && !is_executable($vulnkey_path)) {
