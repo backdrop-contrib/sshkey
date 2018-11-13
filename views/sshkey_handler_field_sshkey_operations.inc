@@ -5,11 +5,17 @@
  */
 class sshkey_handler_field_sshkey_operations extends views_handler_field {
 
+  /**
+   * {@inheritdoc}
+   */
   function construct() {
     parent::construct();
     $this->additional_fields['key_id'] = 'key_id';
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function option_definition() {
     $options = parent::option_definition();
     $options['view_text'] = array('default' => '', 'translatable' => TRUE);
@@ -18,6 +24,9 @@ class sshkey_handler_field_sshkey_operations extends views_handler_field {
     return $options;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
     $form['view_text'] = array(
@@ -37,6 +46,9 @@ class sshkey_handler_field_sshkey_operations extends views_handler_field {
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function query() {
     $base_table = $this->view->base_table;
 
@@ -65,6 +77,9 @@ class sshkey_handler_field_sshkey_operations extends views_handler_field {
     $this->add_additional_fields();
   }
 
+  /**
+   * {@inheritdoc}
+   */
   function render($values) {
     $key_id = $values->{$this->aliases['key_id']};
     $entity_id = $values->{$this->aliases['entity_id']};

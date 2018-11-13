@@ -5,6 +5,9 @@
  */
 class sshkey_handler_field_sshkey_link_delete extends sshkey_handler_field_sshkey_link {
 
+  /**
+   * {@inheritdoc}
+   */
   function render($values) {
     $key_id = $values->{$this->aliases['key_id']};
     $entity_id = $values->{$this->aliases['entity_id']};
