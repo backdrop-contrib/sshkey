@@ -76,27 +76,19 @@ function sshkey_schema() {
  */
 function sshkey_uninstall() {
   // Remove variables.
-  config_clear('sshkey.settings', 'sshkey_help');
+  config('sshkey.settings.json')->delete();
+  db_query('DROP TABLE {sshkey}');
 }
+
 
 /**
  * Migrate sshkey variables to config.
  */
 function sshkey_update_1000() {
   $config = config('sshkey.settings');
-  $config->set('sshkey_help', update_variable_get('sshkey_help', 'dynamic value in file /sshkey/sshkey.module line 54'));
-  $config->set('sshkey_algorithms', update_variable_get('sshkey_algorithms', 'dynamic value in file /sshkey/sshkey.module line 489'));
+  $config->set('sshkey_help', update_variable_get('sshkey_help', 'Need help with public keys? View the help page at <a href="https://www.altagrade.com/help/tutorials/connect" target="_blank">https://www.altagrade.com/help/tutorials/connect</a>.'));
   $config->save();
 
   update_variable_del('sshkey_help');
   update_variable_del('sshkey_algorithms');
-}
-
-/**
- * Implements hook_install().
- */
-function sshkey_install() {
-  // Dynamically generated variable data was detected.
-  // /sshkey/sshkey.module line 54
-  // /sshkey/sshkey.module line 489
 }
