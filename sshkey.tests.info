@@ -1,0 +1,12 @@
+[SSHKeyTestCaseHelper]
+name = SSHKeyTestCaseHelper
+description = SSHKeyTestCaseHelper
+group = sshkey
+file = sshkey.test
+
+[SSHKeyFunctionalTestCase]
+name = SSH key functional test
+description = Tests generic module functionality.
+group = SSH key
+file = sshkey.test
+

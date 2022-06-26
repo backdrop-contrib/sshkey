@@ -23,8 +23,7 @@ define('SSHKEY_ACCESS_IGNORE', NULL);
 /**
  * Exception thrown if a public key does not parse correctly.
  */
-class SSHKeyParseException extends Exception {
-}
+class SSHKeyParseException extends Exception { }
 
 /**
  * Implements hook_entity_info().
@@ -44,6 +43,17 @@ function sshkey_entity_info() {
 }
 
 /**
+ * Implements hook_config_info().
+ */
+function sshkey_config_info() {
+  $prefixes['sshkey.settings'] = array(
+    'label' => t('SSH public keys settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
+}
+
+/**
  * Implements hook_help().
  */
 function sshkey_help($path, $arg) {
@@ -51,7 +61,7 @@ function sshkey_help($path, $arg) {
     case 'user/%/ssh-keys':
     case 'ssh-keys/%/%':
     case 'ssh-keys/%/%/add':
-      if ($help_text = variable_get('sshkey_help', t('Need help with public keys? View the excellent GitHub.com SSH public key help at <a href="http://github.com/guides/providing-your-ssh-key" target="_blank">http://github.com/guides/providing-your-ssh-key</a>.'))) {
+      if ($help_text = config_get('sshkey.settings', 'sshkey_help')) {
         return '<p>' . filter_xss_admin($help_text) . '</p>';
       }
   }
@@ -109,7 +119,7 @@ function sshkey_menu() {
   // followed by entity ID.
   $items['ssh-keys/%/%/add'] = array(
     'title' => 'Add a SSH key',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('sshkey_edit_form', 1, 2),
     'access callback' => 'sshkey_access',
     'access arguments' => array('create', 1, 2),
@@ -126,7 +136,7 @@ function sshkey_menu() {
   );
   $items['ssh-keys/%/%/%sshkey/edit'] = array(
     'title' => 'Edit SSH key',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('sshkey_edit_form', 1, 2, 3),
     'access callback' => 'sshkey_access',
     'access arguments' => array('edit', 1, 2, 3),
@@ -135,7 +145,7 @@ function sshkey_menu() {
   );
   $items['ssh-keys/%/%/%sshkey/delete'] = array(
     'title' => 'Delete SSH key',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('sshkey_delete_form', 3),
     'access callback' => 'sshkey_access',
     'access arguments' => array('delete', 1, 2, 3),
@@ -146,7 +156,7 @@ function sshkey_menu() {
   $items['admin/config/system/ssh-keys'] = array(
     'title' => 'SSH public key settings',
     'description' => 'Configure the SSH public key settings.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('sshkey_settings_form'),
     'access arguments' => array('administer SSH public keys'),
     'file' => 'sshkey.admin.inc',
@@ -182,7 +192,7 @@ function sshkey_entity_delete($entity, $entity_type) {
 function sshkey_views_api() {
   return array(
     'api' => 2,
-    'path' => drupal_get_path('module', 'sshkey') . '/views',
+    'path' => backdrop_get_path('module', 'sshkey') . '/views',
   );
 }
 
@@ -190,7 +200,7 @@ function sshkey_views_api() {
  * Access callback for SSH public key operations.
  */
 function sshkey_access($op, $entity_type = NULL, $entity_id = NULL, $key = NULL, $account = NULL) {
-  $rights = &drupal_static(__FUNCTION__, array());
+  $rights = &backdrop_static(__FUNCTION__, array());
 
   if (!in_array($op, array('view', 'create', 'edit', 'delete'), TRUE)) {
     // If $op was not one of the supported ones, we return access denied.
@@ -296,7 +306,7 @@ function sshkey_sshkey_access($op, $entity_type, $entity_id, $key, $account) {
  */
 function sshkey_load($key_id, $reset = FALSE) {
   $keys = entity_load('sshkey', array($key_id), array(), $reset);
-  return !empty($keys) ? reset($keys) : FALSE;
+  return !empty($keys)?reset($keys) : FALSE;
 }
 
 /**
@@ -304,7 +314,7 @@ function sshkey_load($key_id, $reset = FALSE) {
  */
 function sshkey_load_by_fingerprint($fingerprint) {
   $keys = entity_load('sshkey', FALSE, array('fingerprint' => $fingerprint));
-  return !empty($keys) ? reset($keys) : FALSE;
+  return !empty($keys)?reset($keys) : FALSE;
 }
 
 /**
@@ -362,19 +372,19 @@ function sshkey_save($key) {
 
     // Allow other modules to alter the public key before saving.
     module_invoke_all('sshkey_presave', $key);
-    module_invoke_all('entity_presave', $key, 'sshkey');
+    #module_invoke_all('entity_presave', $key, 'sshkey');
 
     // Save the key to the database and invoke the post-save hooks.
     if ($key->is_new) {
-      drupal_write_record('sshkey', $key);
+      backdrop_write_record('sshkey', $key);
       module_invoke_all('sshkey_insert', $key);
-      module_invoke_all('entity_insert', $key, 'sshkey');
+      #module_invoke_all('entity_insert', $key, 'sshkey');
       watchdog('sshkey', 'Added new SSH key %key (@fingerprint).', array('%key' => $key->title, '@fingerprint' => $key->fingerprint));
     }
     else {
-      drupal_write_record('sshkey', $key, array('key_id'));
+      backdrop_write_record('sshkey', $key, array('key_id'));
       module_invoke_all('sshkey_update', $key);
-      module_invoke_all('entity_update', $key, 'sshkey');
+      #module_invoke_all('entity_update', $key, 'sshkey');
       watchdog('sshkey', 'Updated SSH key %key (@fingerprint).', array('%key' => $key->title, '@fingerprint' => $key->fingerprint));
     }
 
@@ -417,7 +427,7 @@ function sshkey_delete_multiple($key_ids) {
     $keys = sshkey_load_multiple($key_ids);
     foreach ($keys as $key_id => $key) {
       module_invoke_all('sshkey_delete', $key);
-      module_invoke_all('entity_delete', $key, 'sshkey');
+      #module_invoke_all('entity_delete', $key_id, 'sshkey');
       watchdog('sshkey', 'Deleted SSH key %key (@fingerprint).', array('%key' => $key->title, '@fingerprint' => $key->fingerprint));
     }
 
@@ -441,7 +451,7 @@ function sshkey_delete_multiple($key_ids) {
  */
 function sshkey_delete_all_by_entity($entity_type, $entity_id) {
   $key_ids = db_query("SELECT key_id FROM {sshkey} WHERE entity_type = :entitytype AND entity_id = :entityid", array(':entitytype' => $entity_type, ':entityid' => $entity_id))->fetchCol();
-  return !empty($key_ids) ? sshkey_delete_multiple($key_ids) : FALSE;
+  return !empty($key_ids)?sshkey_delete_multiple($key_ids) : FALSE;
 }
 
 /**
@@ -486,11 +496,11 @@ function sshkey_parse($key_raw) {
   }
 
   $parsed['algorithm'] = $key_parts[0];
-  $algorithms = variable_get('sshkey_algorithms', [
-    'ssh-rsa',
-    'ssh-dss',
-    'ssh-ed25519',
-  ]);
+  $algorithms = array(
+    "ssh-rsa",
+    "ssh-dss",
+    "ssh-ed25519",
+  );
   if (!in_array($parsed['algorithm'], $algorithms)) {
     // Produces a string like "ssh-rsa, ssh-dss, or ssh-ed25519".
     $algorithm_string = implode(', or ', array_merge(
@@ -584,7 +594,7 @@ function sshkey_clean_whitespace($key_raw) {
   // unsigned long length, followed by that many bytes.
   $key_value = '';
   $sections = [];
-  while (strlen($decoded_value) > 4 && ($expected_length = 4 + unpack('N', $decoded_value)[1]) <= strlen($decoded_value)) {
+  while (strlen($decoded_value) > 4 && ($expected_length = 4 + unpack('N', $decoded_value) [1]) <= strlen($decoded_value)) {
     $sections[] = substr($decoded_value, 4, $expected_length - 4);
     $key_value .= substr($decoded_value, 0, $expected_length);
     $decoded_value = substr($decoded_value, $expected_length);
@@ -630,4 +640,18 @@ function theme_sshkey_fingerprint($variables) {
   $key = $variables['key'];
   $chunks = str_split($key->fingerprint, 2);
   return implode(':', $chunks);
+}
+
+/**
+ * Implements hook_autoload_info().
+ */
+function sshkey_autoload_info() {
+  return array(
+    'SSHKeyParseException' => 'sshkey.module',
+    'sshkey_handler_field_sshkey_link' => 'views/sshkey_handler_field_sshkey_link.inc',
+    'sshkey_handler_field_sshkey_link_delete' => 'views/sshkey_handler_field_sshkey_link_delete.inc',
+    'sshkey_handler_field_sshkey_link_edit' => 'views/sshkey_handler_field_sshkey_link_edit.inc',
+    'sshkey_handler_field_sshkey_link_view' => 'views/sshkey_handler_field_sshkey_link_view.inc',
+    'sshkey_handler_field_sshkey_operations' => 'views/sshkey_handler_field_sshkey_operations.inc',
+  );
 }

@@ -18,9 +18,18 @@ class sshkey_handler_field_sshkey_operations extends views_handler_field {
    */
   function option_definition() {
     $options = parent::option_definition();
-    $options['view_text'] = array('default' => '', 'translatable' => TRUE);
-    $options['edit_text'] = array('default' => '', 'translatable' => TRUE);
-    $options['delete_text'] = array('default' => '', 'translatable' => TRUE);
+    $options['view_text'] = array(
+      'default' => '',
+      'translatable' => TRUE,
+    );
+    $options['edit_text'] = array(
+      'default' => '',
+      'translatable' => TRUE,
+    );
+    $options['delete_text'] = array(
+      'default' => '',
+      'translatable' => TRUE,
+    );
     return $options;
   }
 
@@ -84,7 +93,7 @@ class sshkey_handler_field_sshkey_operations extends views_handler_field {
     $key_id = $values->{$this->aliases['key_id']};
     $entity_id = $values->{$this->aliases['entity_id']};
     $key = sshkey_load($key_id);
-    $destination = drupal_get_destination();
+    $destination = backdrop_get_destination();
 
     $operations = array();
     if (sshkey_access('view', $this->entity_type, $entity_id, $keyy)) {

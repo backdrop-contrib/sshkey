@@ -6,10 +6,21 @@
  */
 
 /**
+ * Implements hook_config_info().
+ */
+function sshkey_blacklist_config_info() {
+  $prefixes['sshkey_blacklist.settings'] = array(
+    'label' => t('SSH public keys settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
+}
+
+/**
  * Implements hook_sshkey_validate().
  */
 function sshkey_blacklist_sshkey_validate($key, $form, &$form_state) {
-  $vulnkey_path = variable_get('sshkey_blacklist_vulnkey_path', '');
+  $vulnkey_path = config_get('sshkey_blacklist.settings', 'sshkey_blacklist_vulnkey_path');
 
   if (!empty($vulnkey_path) && is_executable($vulnkey_path)) {
     $output = $return_code = NULL;
@@ -32,7 +43,7 @@ function sshkey_blacklist_form_sshkey_settings_form_alter(&$form, $form_state) {
   $form['blacklist']['sshkey_blacklist_vulnkey_path'] = array(
     '#type' => 'textfield',
     '#title' => t('Path to ssh-vulnkey'),
-    '#default_value' => variable_get('sshkey_blacklist_vulnkey_path', ''),
+    '#default_value' => config_get('sshkey_blacklist.settings', 'sshkey_blacklist_vulnkey_path'),
     '#description' => t('Leave blank to disable blacklist checking.'),
   );
 

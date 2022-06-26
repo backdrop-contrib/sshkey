@@ -9,7 +9,7 @@
  * Page callback, list an entity’s SSH keys.
  */
 function sshkey_list_page($entity_type, $entity_id) {
-  $destination = drupal_get_destination();
+  $destination = backdrop_get_destination();
 
   // Add the local actions.
   if (sshkey_access('create', $entity_type, $entity_id)) {
@@ -27,8 +27,15 @@ function sshkey_list_page($entity_type, $entity_id) {
   }
 
   $header = array(
-    'name' => array('data' => t('Title'), 'field' => 'title', 'sort' => 'asc'),
-    'fingerprint' => array('data' => t('Fingerprint'), 'field' => 'fingerprint'),
+    'name' => array(
+      'data' => t('Title'),
+      'field' => 'title',
+      'sort' => 'asc',
+    ),
+    'fingerprint' => array(
+      'data' => t('Fingerprint'),
+      'field' => 'fingerprint',
+    ),
     'operations' => array('data' => t('Operations')),
   );
 
@@ -102,9 +109,9 @@ function sshkey_list_page($entity_type, $entity_id) {
  */
 function sshkey_view_key($entity_type, $entity_id, $key) {
   // We are returning plain text, so tell the browser.
-  drupal_add_http_header('Content-Type', 'text/plain; charset=utf-8');
+  backdrop_add_http_header('Content-Type', 'text/plain; charset=utf-8');
   print $key->value;
-  drupal_page_footer();
+  backdrop_page_footer();
 }
 
 /**
@@ -187,7 +194,7 @@ function sshkey_edit_form_submit($form, &$form_state) {
   form_state_values_clean($form_state);
   $key = (object) $form_state['values'];
   sshkey_save($key);
-  drupal_set_message(t('The SSH public key %title has been saved.', array('%title' => $key->title)));
+  backdrop_set_message(t('The SSH public key %title has been saved.', array('%title' => $key->title)));
 }
 
 /**
@@ -216,5 +223,5 @@ function sshkey_delete_form($form, $form_state, $key) {
  */
 function sshkey_delete_form_submit($form, $form_state) {
   sshkey_delete($form_state['values']['key_id']);
-  drupal_set_message(t('The SSH public key %title has been deleted.', array('%title' => $form['#sshkey']->title)));
+  backdrop_set_message(t('The SSH public key %title has been deleted.', array('%title' => $form['#sshkey']->title)));
 }
