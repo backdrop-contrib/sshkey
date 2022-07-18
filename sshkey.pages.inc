@@ -102,6 +102,7 @@ function sshkey_list_page($entity_type, $entity_id) {
     '#header' => $header,
     '#rows' => $rows,
     '#empty' => implode(' ', $empty_text),
+    '#attributes' => array('id' => array('ssh-keys')),
   );
   $build['keys_table_pager'] = array('#theme' => 'pager');
 
