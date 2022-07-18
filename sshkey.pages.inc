@@ -24,6 +24,10 @@ function sshkey_list_page($entity_type, $entity_id) {
       '#links' => $local_actions,
       '#attributes' => array('class' => 'item-list action-links'),
     );
+    $build['sshkey_help'] = array(
+      '#type' => 'markup',
+      '#markup' => '<div class="description">' . config_get('sshkey.settings', 'sshkey_help') . '</div>',
+    );
   }
 
   $header = array(
