@@ -54,20 +54,6 @@ function sshkey_config_info() {
 }
 
 /**
- * Implements hook_help().
- */
-function sshkey_help($path, $arg) {
-  switch ($path) {
-    case 'user/%/ssh-keys':
-    case 'ssh-keys/%/%':
-    case 'ssh-keys/%/%/add':
-      if ($help_text = config_get('sshkey.settings', 'sshkey_help')) {
-        return '<p>' . filter_xss_admin($help_text) . '</p>';
-      }
-  }
-}
-
-/**
  * Implements hook_permission().
  */
 function sshkey_permission() {
@@ -372,19 +358,16 @@ function sshkey_save($key) {
 
     // Allow other modules to alter the public key before saving.
     module_invoke_all('sshkey_presave', $key);
-    #module_invoke_all('entity_presave', $key, 'sshkey');
 
     // Save the key to the database and invoke the post-save hooks.
     if ($key->is_new) {
       backdrop_write_record('sshkey', $key);
       module_invoke_all('sshkey_insert', $key);
-      #module_invoke_all('entity_insert', $key, 'sshkey');
       watchdog('sshkey', 'Added new SSH key %key (@fingerprint).', array('%key' => $key->title, '@fingerprint' => $key->fingerprint));
     }
     else {
       backdrop_write_record('sshkey', $key, array('key_id'));
       module_invoke_all('sshkey_update', $key);
-      #module_invoke_all('entity_update', $key, 'sshkey');
       watchdog('sshkey', 'Updated SSH key %key (@fingerprint).', array('%key' => $key->title, '@fingerprint' => $key->fingerprint));
     }
 
@@ -427,7 +410,6 @@ function sshkey_delete_multiple($key_ids) {
     $keys = sshkey_load_multiple($key_ids);
     foreach ($keys as $key_id => $key) {
       module_invoke_all('sshkey_delete', $key);
-      #module_invoke_all('entity_delete', $key_id, 'sshkey');
       watchdog('sshkey', 'Deleted SSH key %key (@fingerprint).', array('%key' => $key->title, '@fingerprint' => $key->fingerprint));
     }
 

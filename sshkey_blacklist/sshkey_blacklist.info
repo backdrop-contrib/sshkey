@@ -3,3 +3,4 @@ description = "Validates SSH keys using the ssh-vulnkey blacklist."
 backdrop = 1.x
 type = module
 dependencies[] = sshkey
+configure = admin/config/system/ssh-keys
