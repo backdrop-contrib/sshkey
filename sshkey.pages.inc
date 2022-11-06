@@ -15,7 +15,7 @@ function sshkey_list_page($entity_type, $entity_id) {
   if (sshkey_access('create', $entity_type, $entity_id)) {
     $local_actions['add'] = array(
       'title' => t('Add a public key'),
-      'href' => "ssh-keys/{$entity_type}/{$entity_id}/add",
+      'href' => "{$entity_type}/{$entity_id}/ssh-keys/add",
       'query' => $destination,
       'modal' => TRUE,
     );
@@ -55,7 +55,7 @@ function sshkey_list_page($entity_type, $entity_id) {
   $rows = array();
   foreach ($key_ids as $key_id) {
     $key = $keys[$key_id];
-    $key_base_uri = "ssh-keys/{$entity_type}/{$entity_id}/{$key_id}";
+    $key_base_uri = "{$entity_type}/{$entity_id}/ssh-keys/{$key_id}";
 
     $rows[$key_id]['title'] = check_plain($key->title);
     $rows[$key_id]['fingerprint'] = theme('sshkey_fingerprint', array('key' => $key));
@@ -94,7 +94,7 @@ function sshkey_list_page($entity_type, $entity_id) {
 
   $empty_text[] = t('No SSH public keys available.');
   if (sshkey_access('create', $entity_type, $entity_id)) {
-    $empty_text[] = l(t('Add a public key'), "ssh-keys/{$entity_type}/{$entity_id}/add", array('query' => $destination, 'modal' => TRUE));
+    $empty_text[] = l(t('Add a public key'), "{$entity_type}/{$entity_id}/ssh-keys/add", array('query' => $destination, 'modal' => TRUE));
   }
 
   $build['keys_table'] = array(

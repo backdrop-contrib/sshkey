@@ -103,38 +103,38 @@ function sshkey_menu() {
 
   // The first two arguments for the following CRUD pages are entity type,
   // followed by entity ID.
-  $items['ssh-keys/%/%/add'] = array(
+  $items['user/%/ssh-keys/add'] = array(
     'title' => 'Add a SSH key',
     'page callback' => 'backdrop_get_form',
-    'page arguments' => array('sshkey_edit_form', 1, 2),
+    'page arguments' => array('sshkey_edit_form', 0, 1),
     'access callback' => 'sshkey_access',
-    'access arguments' => array('create', 1, 2),
+    'access arguments' => array('create', 0, 1),
     'file' => 'sshkey.pages.inc',
     'modal' => TRUE,
   );
-  $items['ssh-keys/%/%/%sshkey/view'] = array(
+  $items['user/%/ssh-keys/%sshkey/view'] = array(
     'title' => 'View SSH key',
     'page callback' => 'sshkey_view_key',
-    'page arguments' => array(1, 2, 3),
+    'page arguments' => array(0, 1, 3),
     'access callback' => 'sshkey_access',
-    'access arguments' => array('view', 1, 2, 3),
+    'access arguments' => array('view', 0, 1, 3),
     'file' => 'sshkey.pages.inc',
   );
-  $items['ssh-keys/%/%/%sshkey/edit'] = array(
+  $items['user/%/ssh-keys/%sshkey/edit'] = array(
     'title' => 'Edit SSH key',
     'page callback' => 'backdrop_get_form',
-    'page arguments' => array('sshkey_edit_form', 1, 2, 3),
+    'page arguments' => array('sshkey_edit_form', 0, 1, 3),
     'access callback' => 'sshkey_access',
-    'access arguments' => array('edit', 1, 2, 3),
+    'access arguments' => array('edit', 0, 1, 3),
     'file' => 'sshkey.pages.inc',
     'modal' => TRUE,
   );
-  $items['ssh-keys/%/%/%sshkey/delete'] = array(
+  $items['user/%/ssh-keys/%sshkey/delete'] = array(
     'title' => 'Delete SSH key',
     'page callback' => 'backdrop_get_form',
     'page arguments' => array('sshkey_delete_form', 3),
     'access callback' => 'sshkey_access',
-    'access arguments' => array('delete', 1, 2, 3),
+    'access arguments' => array('delete', 0, 1, 3),
     'file' => 'sshkey.pages.inc',
     'modal' => TRUE,
   );
